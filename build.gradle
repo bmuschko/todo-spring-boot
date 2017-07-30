@@ -1,39 +1,27 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.3.5.RELEASE")
-    }
+plugins {
+    id 'org.springframework.boot' version '1.5.6.RELEASE'
 }
 
-apply plugin: 'java'
-apply plugin: 'spring-boot'
-apply plugin: 'idea'
 apply plugin: 'war'
 
-
-jar {
-	baseName = 'todo-spring-boot'
-	version = '1.0.0'
-}
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
+
+war {
+    baseName = 'todo'
+    version = '1.0.0'
+}
 
 repositories {
     mavenCentral()
 }
 
-configurations {
-	providedRuntime
-}
-
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
-	compile('org.springframework.boot:spring-boot-starter-data-jpa')
-	runtime('com.h2database:h2')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    runtime('com.h2database:h2')
     runtime('javax.servlet:jstl')
-	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
-	providedRuntime('org.apache.tomcat.embed:tomcat-embed-jasper')
-	testCompile('org.springframework.boot:spring-boot-starter-test') 
+    providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
+    providedRuntime('org.apache.tomcat.embed:tomcat-embed-jasper')
+    testCompile('org.springframework.boot:spring-boot-starter-test') 
 }
