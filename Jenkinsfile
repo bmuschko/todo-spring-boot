@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Compile') {
             steps {
-                sh './gradlew classes'
+                sh './gradlew clean classes'
             }
         }
         stage('Unit Tests') {
