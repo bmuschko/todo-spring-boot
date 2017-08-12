@@ -1,0 +1,24 @@
+buildscript {
+    repositories {
+        maven {
+            url 'https://plugins.gradle.org/m2/'
+        }
+    }
+    dependencies {
+        classpath 'gradle.plugin.com.heroku.sdk:heroku-gradle:0.3.0'
+    }
+}
+
+apply plugin: com.heroku.sdk.gradle.HerokuPlugin
+
+heroku {
+    appName = 'todo-spring-boot'
+    includes = ["$buildDir.name/libs/$war.archiveName"]
+    includeBuildDir = false
+
+    processTypes(
+        web: "java \$JAVA_OPTS -jar $buildDir.name/libs/$war.archiveName --server.port=\$PORT".toString()
+    )
+}
+
+deployHeroku.dependsOn assemble

@@ -3,8 +3,6 @@ plugins {
 }
 
 apply plugin: 'war'
-apply from: "$rootDir/gradle/integration-test.gradle"
-apply from: "$rootDir/gradle/code-analysis.gradle"
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -13,6 +11,10 @@ war {
     baseName = 'todo'
     version = '1.0.0'
 }
+
+apply from: "$rootDir/gradle/integration-test.gradle"
+apply from: "$rootDir/gradle/code-analysis.gradle"
+apply from: "$rootDir/gradle/deploy.gradle"
 
 repositories {
     mavenCentral()
