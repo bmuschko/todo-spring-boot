@@ -27,6 +27,11 @@ pipeline {
                 }
             }
         }
+        stage('Code Analysis') {
+            steps {
+                sh './gradlew sonarqube'
+            }
+        }
         stage('Assemble') {
             steps {
                 sh './gradlew assemble'

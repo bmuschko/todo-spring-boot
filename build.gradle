@@ -4,6 +4,7 @@ plugins {
 
 apply plugin: 'war'
 apply from: "$rootDir/gradle/integration-test.gradle"
+apply from: "$rootDir/gradle/code-analysis.gradle"
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
