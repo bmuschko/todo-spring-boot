@@ -3,6 +3,7 @@ plugins {
 }
 
 apply plugin: 'war'
+apply from: "$rootDir/gradle/integration-test.gradle"
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -23,5 +24,5 @@ dependencies {
     runtime('javax.servlet:jstl')
     providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
     providedRuntime('org.apache.tomcat.embed:tomcat-embed-jasper')
-    testCompile('org.springframework.boot:spring-boot-starter-test') 
+    testCompile('org.springframework.boot:spring-boot-starter-test')
 }

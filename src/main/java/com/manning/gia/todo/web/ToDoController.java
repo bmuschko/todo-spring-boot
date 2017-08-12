@@ -64,7 +64,7 @@ public class ToDoController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String insertItem(@RequestParam Long id, @RequestParam String name, @RequestParam String filter) {
+    public String updateItem(@RequestParam Long id, @RequestParam String name, @RequestParam String filter) {
         ToDoItem toDoItem = toDoRepository.findOne(id);
 
         if(toDoItem != null) {
@@ -162,6 +162,32 @@ public class ToDoController {
 
         public int getAll() {
             return active + completed;
+        }
+
+        void setActive(int active) {
+            this.active = active;
+        }
+
+        void setCompleted(int completed) {
+            this.completed = completed;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            ToDoListStats stats = (ToDoListStats) o;
+
+            if (active != stats.active) return false;
+            return completed == stats.completed;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = active;
+            result = 31 * result + completed;
+            return result;
         }
     }
 }

@@ -7,7 +7,7 @@ pipeline {
                 sh './gradlew classes'
             }
         }
-        stage('Unit Test') {
+        stage('Unit Tests') {
             steps {
                 sh './gradlew test'
             }
@@ -15,6 +15,21 @@ pipeline {
                 always {
                     junit '**/build/test-results/test/TEST-*.xml'
                 }
+            }
+        }
+        stage('Integration Tests') {
+            steps {
+                sh './gradlew integrationTest'
+            }
+            post {
+                always {
+                    junit '**/build/test-results/integration/TEST-*.xml'
+                }
+            }
+        }
+        stage('Assemble') {
+            steps {
+                sh './gradlew assemble'
             }
         }
     }
