@@ -13,11 +13,6 @@ task integrationTest(type: Test) {
     testClassesDirs = sourceSets.integrationTest.output.classesDirs
     classpath = sourceSets.integrationTest.runtimeClasspath
     mustRunAfter test
-
-    reports {
-        html.destination = project.file("$html.destination/integration")
-        junitXml.destination = project.file("$junitXml.destination/integration")
-    }
 }
 
 check.dependsOn integrationTest
