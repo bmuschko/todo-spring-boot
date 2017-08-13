@@ -45,7 +45,7 @@ pipeline {
             }
         }
         stage('Deploy') {
-            input message: Deploy to Heroku?'
+            input message: 'Deploy to Heroku?'
             environment {
                 HEROKU_API_KEY = credentials('HEROKU_API_KEY')
             }
