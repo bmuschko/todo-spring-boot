@@ -13,6 +13,9 @@ apply plugin: org.sonarqube.gradle.SonarQubePlugin
 
 sonarqube {
     properties {
+        property 'sonar.host.url', 'https://sonarcloud.io'
+        property 'sonar.organization', 'bmuschko-github'
+        property 'sonar.login', System.getenv('SONAR_LOGIN')
         properties['sonar.tests'] += sourceSets.integrationTest.java.srcDirs
     }
 }

@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    environment {
+        SONAR_LOGIN = credentials('SONAR_LOGIN')
+        HEROKU_API_KEY = credentials('HEROKU_API_KEY')
+    }
+
     stages {
         stage('Compile') {
             steps {
