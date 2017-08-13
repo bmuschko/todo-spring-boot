@@ -21,22 +21,22 @@ pipeline {
                 }
             }
         }
-        stage('Integration Tests') {
+        stage('Integration Tests & Code Analysis') {
+            environment {
+                SONAR_LOGIN = credentials('SONAR_LOGIN')
+            }
             steps {
-                gradlew('integrationTest')
+                parallel("Integration Tests": {
+                    gradlew('integrationTest')
+                },
+                "Code Analysis": {
+                    gradlew('sonarqube')
+                })
             }
             post {
                 always {
                     junit '**/build/test-results/integrationTest/TEST-*.xml'
                 }
-            }
-        }
-        stage('Code Analysis') {
-            environment {
-                SONAR_LOGIN = credentials('SONAR_LOGIN')
-            }
-            steps {
-                gradlew('sonarqube')
             }
         }
         stage('Assemble') {
