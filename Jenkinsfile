@@ -42,9 +42,10 @@ pipeline {
                 sh './gradlew assemble'
             }
         }
-        stage('Deploy') {
-            input 'Deploy to Heroku?'
 
+        input 'Deploy to Heroku?'
+
+        stage('Deploy') {
             steps {
                 sh './gradlew deployHeroku'
             }
