@@ -43,6 +43,10 @@ pipeline {
             }
         }
         stage('Deploy') {
+            timeout(time: 10, unit: 'MINUTES') {
+                input message: "Deploy to Heroku?"
+            }
+
             steps {
                 sh './gradlew deployHeroku'
             }
