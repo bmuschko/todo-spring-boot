@@ -23,13 +23,13 @@ pipeline {
         }
         stage('Integration Tests & Code Analysis') {
             steps {
+                environment {
+                    SONAR_LOGIN = credentials('SONAR_LOGIN')
+                }
                 parallel("Integration Tests": {
                     gradlew('integrationTest')
                 },
                 "Code Analysis": {
-                    environment {
-                        SONAR_LOGIN = credentials('SONAR_LOGIN')
-                    }
                     gradlew('sonarqube')
                 })
             }
