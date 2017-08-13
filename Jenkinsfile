@@ -45,11 +45,11 @@ pipeline {
             }
         }
         stage('Deploy') {
-            input message: 'Deploy to Heroku?'
             environment {
                 HEROKU_API_KEY = credentials('HEROKU_API_KEY')
             }
             steps {
+                input message: 'Deploy to Heroku?'
                 gradlew('deployHeroku')
             }
         }
