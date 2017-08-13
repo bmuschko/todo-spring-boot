@@ -8,12 +8,12 @@ pipeline {
     stages {
         stage('Compile') {
             steps {
-                sh './gradlew clean classes'
+                gradlew('clean', 'classes')
             }
         }
         stage('Unit Tests') {
             steps {
-                sh './gradlew test'
+                gradlew('test')
             }
             post {
                 always {
@@ -23,7 +23,7 @@ pipeline {
         }
         stage('Integration Tests') {
             steps {
-                sh './gradlew integrationTest'
+                gradlew('integrationTest')
             }
             post {
                 always {
@@ -36,12 +36,12 @@ pipeline {
                 SONAR_LOGIN = credentials('SONAR_LOGIN')
             }
             steps {
-                sh './gradlew sonarqube'
+                gradlew('sonarqube')
             }
         }
         stage('Assemble') {
             steps {
-                sh './gradlew assemble'
+                gradlew('assemble')
             }
         }
         stage('Deploy') {
@@ -49,8 +49,12 @@ pipeline {
                 HEROKU_API_KEY = credentials('HEROKU_API_KEY')
             }
             steps {
-                sh './gradlew deployHeroku'
+                gradlew('deployHeroku')
             }
         }
     }
+}
+
+def gradlew(String... args) {
+    sh "./gradlew ${args.join(' ')} -s"
 }
