@@ -21,11 +21,11 @@ pipeline {
                 }
             }
         }
-        stage('Integration Tests & Code Analysis') {
+        stage('Long-running Tests and Verification') {
+            environment {
+                SONAR_LOGIN = credentials('SONAR_LOGIN')
+            }
             steps {
-                environment {
-                    SONAR_LOGIN = credentials('SONAR_LOGIN')
-                }
                 parallel("Integration Tests": {
                     gradlew('integrationTest')
                 },
