@@ -21,7 +21,7 @@ pipeline {
                 }
             }
         }
-        stage('Long-running Tests and Verification') {
+        stage('Long-running Verification') {
             environment {
                 SONAR_LOGIN = credentials('SONAR_LOGIN')
             }
