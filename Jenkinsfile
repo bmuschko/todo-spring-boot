@@ -1,9 +1,8 @@
 pipeline {
     agent any
 
-    environment {
-        SONAR_LOGIN = credentials('SONAR_LOGIN')
-        HEROKU_API_KEY = credentials('HEROKU_API_KEY')
+    triggers {
+        pollSCM('H 4/* 0 0 1-5')
     }
 
     stages {
@@ -33,6 +32,9 @@ pipeline {
             }
         }
         stage('Code Analysis') {
+            environment {
+                SONAR_LOGIN = credentials('SONAR_LOGIN')
+            }
             steps {
                 sh './gradlew sonarqube'
             }
@@ -43,10 +45,9 @@ pipeline {
             }
         }
         stage('Deploy') {
-            timeout(time: 10, unit: 'MINUTES') {
-                input message: "Deploy to Heroku?"
+            environment {
+                HEROKU_API_KEY = credentials('HEROKU_API_KEY')
             }
-
             steps {
                 sh './gradlew deployHeroku'
             }
