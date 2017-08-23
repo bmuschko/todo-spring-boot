@@ -45,7 +45,7 @@ pipeline {
                 stash 'complete-workspace'
             }
         }
-        stage 'Promotion' {
+        stage('Promotion') {
             steps {
                 input 'Deploy to Production?'
             }
