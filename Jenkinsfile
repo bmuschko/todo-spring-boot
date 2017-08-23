@@ -47,7 +47,7 @@ pipeline {
         }
         stage('Promotion') {
             steps {
-                timeout(time: 1, unit: 'DAYS') {
+                timeout(time: 1, unit:'DAYS') {
                     input 'Deploy to Production?'
                 }
             }
@@ -60,6 +60,11 @@ pipeline {
                 unstash 'app'
                 gradlew('deployHeroku')
             }
+        }
+    }
+    notifications {
+        failure {
+            mail to: 'benjamin.muschko@gmail.com', subject: 'Build failed'
         }
     }
 }
