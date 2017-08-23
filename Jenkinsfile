@@ -42,7 +42,7 @@ pipeline {
         stage('Assemble') {
             steps {
                 gradlew('assemble')
-                stash 'complete-workspace'
+                stash includes: '**/build/libs/*.jar', name: 'app'
             }
         }
         stage('Promotion') {
@@ -55,7 +55,7 @@ pipeline {
                 HEROKU_API_KEY = credentials('HEROKU_API_KEY')
             }
             steps {
-                unstash 'complete-workspace'
+                unstash 'app'
                 gradlew('deployHeroku')
             }
         }
