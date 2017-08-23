@@ -64,7 +64,7 @@ pipeline {
     }
     post {
         failure {
-            mail to: 'benjamin.muschko@gmail.com', subject: 'Build failed'
+            mail to: 'benjamin.muschko@gmail.com', subject: 'Build failed', body: 'Please fix!'
         }
     }
 }
