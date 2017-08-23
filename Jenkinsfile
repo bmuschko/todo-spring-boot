@@ -62,7 +62,7 @@ pipeline {
             }
         }
     }
-    notifications {
+    post {
         failure {
             mail to: 'benjamin.muschko@gmail.com', subject: 'Build failed'
         }
