@@ -26,11 +26,11 @@ pipeline {
                 SONAR_LOGIN = credentials('SONAR_LOGIN')
             }
             steps {
-                parallel("Integration Tests": {
-                    gradlew('integrationTest')
-                },
-                "Code Analysis": {
+                parallel("Code Analysis": {
                     gradlew('sonarqube')
+                },
+                "Integration Tests": {
+                    gradlew('integrationTest')
                 })
             }
             post {
