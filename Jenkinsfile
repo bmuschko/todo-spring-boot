@@ -42,14 +42,18 @@ pipeline {
         stage('Assemble') {
             steps {
                 gradlew('assemble')
+                stash 'complete-workspace'
             }
         }
-        stage('Deploy') {
+        stage 'Promotion' {
+          input 'Deploy to Production?'
+        }
+        stage('Deploy to Production') {
             environment {
                 HEROKU_API_KEY = credentials('HEROKU_API_KEY')
             }
             steps {
-                input message: 'Deploy to Heroku?'
+                unstash 'complete-workspace'
                 gradlew('deployHeroku')
             }
         }
