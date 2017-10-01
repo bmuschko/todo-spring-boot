@@ -23,13 +23,13 @@ pipeline {
         }
         stage('Long-running Verification') {
             environment {
-                SONAR_LOGIN = credentials('SONAR_LOGIN')
+                SONAR_LOGIN = credentials('SONARCLOUD_TOKEN')
             }
             steps {
-                parallel("Integration Tests": {
+                parallel('Integration Tests': {
                     gradlew('integrationTest')
                 },
-                "Code Analysis": {
+                'Code Analysis': {
                     gradlew('sonarqube')
                 })
             }
