@@ -1,0 +1,33 @@
+= A sample To Do web application image:https://travis-ci.org/bmuschko/todo-spring-boot.svg?branch=master["Build Status", link="https://travis-ci.org/bmuschko/todo-spring-boot"]
+
+This project is a simple, MVC-based task management web application written in Java powered by Spring Boot. Its main purpose is to demonstrate implementation approaches for typical project automation requirements with the help of Gradle. The code of this project is featured in the book link:http://www.manning.com/muschko["Gradle in Action"] published by Manning.
+
+== Applied Gradle features
+
+* Usage of the Gradle Wrapper.
+* Support for a multi-project build.
+* Implements various testing strategies:
+** Unit testing with Spock.
+** Integration testing Spring test utilities.
+* Static code analysis with publishing of result to SonarCloud.
+* Deployment of the WAR file to Heroku.
+
+== Running the application
+
+You can directly run your application your local machine. There's no need to install a Servlet container. In a terminal window execute the following command from the root level of the project:
+
+*Mac OS X/*nix*
+
+[source]
+----
+./gradlew bootRun
+----
+
+*Windows*
+
+[source]
+----
+gradlew.bat bootRun
+----
+
+Open your browser of choice and navigate to the URL `http://localhost:8080/`.
