@@ -1,5 +1,7 @@
 plugins {
     id 'org.springframework.boot' version '1.5.6.RELEASE'
+    id 'java-library'
+    id 'net.researchgate.release' version '2.8.1'
 }
 
 apply plugin: 'war'
@@ -28,4 +30,16 @@ dependencies {
     providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
     providedRuntime('org.apache.tomcat.embed:tomcat-embed-jasper')
     testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+release {
+    snapshotSuffix = '-SNAPSHOT'
+
+    git {
+        requireBranch = 'master'
+        pushToRemote = 'origin'
+        pushToBranchPrefix = ''
+        commitVersionFileOnly = false
+        signTag = false
+    }
 }
