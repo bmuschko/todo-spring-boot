@@ -26,15 +26,24 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
 
+    - name: Retrieve version
+      shell: bash
+      id: release-version
+      run: |
+        export version=$(./gradlew properties | grep version | cut -d':' -f 2 | xargs)
+        export newversion=${version//-SNAPSHOT/}
+        echo "newversion=$newversion" >> $GITHUB_ENV
+
     - name: Create release
       env:
         TOKEN: ${{ secrets.GH_PAT }}
-      shell: bash
       run: |
-        git config user.email "rey.suela@assurity.co.nz"
-        git config user.name "reysuela"
-        export version=$(./gradlew properties | grep version | cut -d':' -f 2 | xargs)
-        export newversion=${version//-SNAPSHOT/}
-        echo "$version $newversion" > version
-        cat version
-        printenv
+        ./gradlew release -Prelease.useAutomaticVersion=true -Prelease.releaseVersion=${{ env.newversion }}
+        echo "Creating release ${{ env.newversion }}"
+        curl -X POST -H "authorization: Bearer $TOKEN" -H "content-type: application/json" "https://api.github.com/repos/reysuela/todo-spring-boot/releases" -d '{"tag_name":"${{ env.newversion }}"}'
+        echo 'Uploading asset'
+        export asset_id=$(curl -H "authorization: Bearer $TOKEN" -H "content-type: application/json" "https://api.github.com/repos/reysuela/todo-spring-boot/releases/latest" | jq '.'id --raw-output)
+        echo "asset_id=$asset_id" >> $GITHUB_ENV
+        curl -X POST -H "authorization: Bearer $TOKEN" -H "content-type: application/java-archive" --data-binary @build/libs/todo-${{ env.newversion }}.war "https://uploads.github.com/repos/reysuela/todo-spring-boot/releases/${{ env.asset_id }}/assets?name=todo-${{ env.newversion }}.war
+      
+     
