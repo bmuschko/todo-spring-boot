@@ -26,14 +26,6 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
 
-    - name: Checkout
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-
-    - name: Checkout master
-      run: git checkout master
-
     - name: Create release
       env:
         TOKEN: ${{ secrets.GH_PAT }}
