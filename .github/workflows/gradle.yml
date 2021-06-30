@@ -36,7 +36,7 @@ jobs:
         export version=$(./gradlew properties | grep version | cut -d':' -f 2 | xargs)
         export newversion=${version//SNAPSHOT/}
         ./gradlew release -Prelease.useAutomaticVersion=true -Prelease.releaseVersion=$newversion
-        echo 'Creating release $newversion ${newversion} ${{ newversion }}'
+        echo 'Creating release $newversion ${newversion}'
         curl -X POST -H "authorization: Bearer $TOKEN" -H "content-type: application/json" "https://api.github.com/repos/reysuela/todo-spring-boot/releases" -d '{"tag_name":"$newversion"}'
         echo 'Uploading asset'
         export asset_id=$(curl -H "authorization: Bearer $TOKEN" -H "content-type: application/json" "https://api.github.com/repos/reysuela/todo-spring-boot/releases/latest" | jq '.'id --raw-output)
