@@ -46,10 +46,11 @@ jobs:
         echo 'Uploading asset'
         export asset_id=$(curl -H "authorization: Bearer $TOKEN" -H "content-type: application/json" "https://api.github.com/repos/reysuela/todo-spring-boot/releases/latest" | jq '.'id --raw-output)
         echo "asset_id=$asset_id" >> $GITHUB_ENV
-        echo "${{ env.asset_id }}"
+        echo "this is the asset id: ${{ env.asset_id }}"
         ls -la
         ls -la build/
         ls -la build/libs/
-        curl -X POST -H "authorization: Bearer $TOKEN" -H "content-type: application/java-archive" --data-binary @build/libs/todo-${{ env.newversion }}.war "https://uploads.github.com/repos/reysuela/todo-spring-boot/releases/${{ env.asset_id }}/assets?name=todo-${{ env.newversion }}.war"
+        curl -X POST -H "authorization: Bearer $TOKEN" -H "content-type: application/java-archive" --data-binary @build/libs/todo-${{ env.newversion }}.war "https://uploads.github.com/repos/reysuela/todo-spring-boot/releases/$asset_id/assets?name=todo-${{ env.newversion }}.war"
+        echo curl -X POST -H "authorization: Bearer $TOKEN" -H "content-type: application/java-archive" --data-binary @build/libs/todo-${{ env.newversion }}.war "https://uploads.github.com/repos/reysuela/todo-spring-boot/releases/${{ env.asset_id }}/assets?name=todo-${{ env.newversion }}.war"
       
      
