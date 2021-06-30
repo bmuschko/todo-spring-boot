@@ -30,6 +30,8 @@ jobs:
       env:
         TOKEN: ${{ secrets.GH_PAT }}
       run: |
+        git config user.email "rey.suela@assurity.co.nz"
+        git config user.name "reysuela"
         export version=$(./gradlew properties | grep version | cut -d':' -f 2 | xargs)
         export newversion=${version//SNAPSHOT/}
         ./gradlew release -Prelease.useAutomaticVersion=true -Prelease.releaseVersion=$newversion
