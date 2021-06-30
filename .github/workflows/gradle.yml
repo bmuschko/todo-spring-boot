@@ -38,6 +38,8 @@ jobs:
       env:
         TOKEN: ${{ secrets.GH_PAT }}
       run: |
+        git config user.email "rey.suela@assurity.co.nz"
+        git config user.name "reysuela"
         ./gradlew release -Prelease.useAutomaticVersion=true -Prelease.releaseVersion=${{ env.newversion }}
         echo "Creating release ${{ env.newversion }}"
         curl -X POST -H "authorization: Bearer $TOKEN" -H "content-type: application/json" "https://api.github.com/repos/reysuela/todo-spring-boot/releases" -d '{"tag_name":"${{ env.newversion }}"}'
