@@ -33,5 +33,6 @@ jobs:
       run: |
         git config user.email "rey.suela@assurity.co.nz"
         git config user.name "reysuela"
-        ./gradlew properties | grep version | cut -d':' -f 2 | xargs > version
+        export version=$(./gradlew properties | grep version | cut -d':' -f 2 | xargs)
+        echo ${version//-SNAPSHOT/} > version
         cat version
