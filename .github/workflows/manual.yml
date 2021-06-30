@@ -1,0 +1,21 @@
+name: Download release
+
+on: workflow_dispatch
+
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Get latest release
+      env:
+        TOKEN: ${{ secrets.GH_PAT }}
+      run: |
+        export latesturl=$(curl -X GET -H "authorization: Bearer $TOKEN" https://api.github.com/repos/reysuela/todo-spring-boot/releases/latest | jq "."assets[0].url)
+        echo "latesturl=$latesturl" >> $GITHUB_ENV
+      
+    - name: Download latest
+      run: |
+        wget -q --auth-no-challenge --header='Accept:application/octet-stream' ${{ env.latesturl }} -O todo.war
+        ls -la
+        
