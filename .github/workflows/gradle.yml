@@ -33,13 +33,5 @@ jobs:
       run: |
         git config user.email "rey.suela@assurity.co.nz"
         git config user.name "reysuela"
-        export version=$(./gradlew properties | grep version | cut -d':' -f 2 | xargs)
-        export newversion=${version//SNAPSHOT/}
-        ./gradlew release -Prelease.useAutomaticVersion=true -Prelease.releaseVersion=$newversion
-        echo 'Creating release $newversion ${newversion}'
-        curl -X POST -H "authorization: Bearer $TOKEN" -H "content-type: application/json" "https://api.github.com/repos/reysuela/todo-spring-boot/releases" -d '{"tag_name":"$newversion"}'
-        echo 'Uploading asset'
-        export asset_id=$(curl -H "authorization: Bearer $TOKEN" -H "content-type: application/json" "https://api.github.com/repos/reysuela/todo-spring-boot/releases/latest" | jq '.'id --raw-output)
-        curl -X POST -H "authorization: Bearer $TOKEN" -H "content-type: application/java-archive" --data-binary @build/libs/todo-$newversion.war "https://uploads.github.com/repos/reysuela/todo-spring-boot/releases/$asset_id/assets?name=todo-$newversion.war
-      
-     
+        ./gradlew properties | grep version | cut -d':' -f 2 | xargs > version
+        cat version
