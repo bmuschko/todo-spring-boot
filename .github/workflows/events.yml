@@ -1,0 +1,18 @@
+name: Check events
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  Release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Retrieve latest release version
+        shell: bash
+        run: |
+          echo 'Even action: ${{ github.event.action }}'
+          echo 'Is merged? ${{ github.event.pull_request.merged }}'
+
